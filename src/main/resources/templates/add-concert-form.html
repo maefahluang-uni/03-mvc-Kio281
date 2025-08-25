@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Concert</title>
 </head>
 <body>
-    <h1>Add Concert</h1>
-    <!-- add form for adding concert-->
-
+<h2>Add New Concert</h2>
+<form th:action="@{/concerts}" th:object="${concert}" method="post">
+    <label>Title: <input type="text" th:field="*{title}" required /></label><br/>
+    <label>Performer: <input type="text" th:field="*{performer}" required /></label><br/>
+    <label>Date: <input type="date" th:field="*{date}" required /></label><br/>
+    <label>Description: <textarea th:field="*{description}"></textarea></label><br/>
+    <button type="submit">Add Concert</button>
+</form>
 </body>
 </html>

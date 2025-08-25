@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concert List</title>
 </head>
 <body>
-    <h1>Concert List</h1>
-    <a href="/add-concert/">Add Concert</a>
-    <!-- TODO: show delete link for each concert -->
-
-    <!-- TODO: Add list of concerts -->
+<h2>Concert List</h2>
+<a href="/add-concert-form">Add New Concert</a> |
+<a href="/delete-concert">Delete All Concerts</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Performer</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="concert : ${concerts}">
+        <td th:text="${concert.id}"></td>
+        <td th:text="${concert.title}"></td>
+        <td th:text="${concert.performer}"></td>
+        <td th:text="${concert.date}"></td>
+        <td th:text="${concert.description}"></td>
+        <td><a th:href="@{/delete-concert/{id}(id=${concert.id})}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

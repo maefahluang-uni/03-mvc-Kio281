@@ -19,45 +19,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ConcertController {
-    // TODO: create hashmap of concerts for storing data
-
-    //TODO: add initbinder to convert date
+ private final List<Concert> concerts = new ArrayList<>();
+  private Long nextId = 1L;
 
     @GetMapping("/concerts")
     public String listConcerts(Model model) {
-        // TODO: add concerts to model
-        // TODO: return a template to list concerts
-        return "";
+        model.addAttribute("concerts", concerts);
+        return "list-concert";
     }
 
-    @GetMapping("/add-concert")
+    @GetMapping("/add-concert-form")
     public String addAConcertForm(Model model) {
-        // TODO: pass blank concert to a form
-        // TODO: return a template for concert form
-        return "";
+        model.addAttribute("concert", new Concert());
+        return "add-concert-form";
     }
 
     @PostMapping("/concerts")
     public String saveConcert(@ModelAttribute Concert concert) {
-        // TODO: add concert to list of concerts
-        // TODO: increment nextId
-        // TODO: redirect to list concerts
-        return "";
+        concert.setId((long) nextId++);
+        concerts.add(concert);
+        return "redirect:/concerts";
     }
 
     @GetMapping("/delete-concert/{id}")
-    public String deleteConcert(@PathVariable int id) {
-        // TODO: remove concert from list of concerts
-        // TODO: redirect to list concerts
-        return "";
+    public String deleteConcert(@PathVariable("id") Long id) {
+        concerts.removeIf(c -> c.getId().equals(id));
+        return "redirect:/concerts";
     }
 
-    
     @GetMapping("/delete-concert")
     public String removeAllConcerts() {
-        //TODO: clear all employees and reset id
-        // TODO: redirect to list concerts
-        return "";
+        concerts.clear();
+        nextId = 1L;
+        return "redirect:/concerts";
     }
 
 }
